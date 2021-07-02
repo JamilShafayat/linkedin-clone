@@ -33,7 +33,7 @@ function Feed() {
 	const sendPost = (e) => {
 		e.preventDefault();
 		db.collection('posts').add({
-			name: user?.displayName || 'Jamil',
+			name: user.displayName,
 			description: user.email,
 			message: input,
 			photoUrl: user.photoUrl || '',

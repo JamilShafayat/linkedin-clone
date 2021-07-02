@@ -7,6 +7,7 @@ import { auth } from './firebase';
 import Header from './Header';
 import Login from './Login';
 import Sidebar from './Sidebar';
+import Widgets from './Widgets';
 
 function App() {
 	
@@ -19,14 +20,14 @@ function App() {
 				dispatch(login({
 					email: userAuth.email,
 					uid: userAuth.uid,
-					displayName: userAuth.displayName.anchor,
+					displayName: userAuth.displayName,
 					photoUrl: userAuth.photoURL
 				}))
 			}else {
 				dispatch(logout());
 			}
 		});
-	}, [dispatch]);
+	}, []);
 
   return (
 		<div className="app">
@@ -35,6 +36,7 @@ function App() {
 					<div className="app_body">
 						<Sidebar />
 						<Feed />
+						<Widgets />
 					</div>
 				)}
 		</div>
