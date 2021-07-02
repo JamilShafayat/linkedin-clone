@@ -32,7 +32,7 @@ function Header() {
 				<HeaderOption Icon={ BusinessCenterOutlined } title="Jobs"/>
 				<HeaderOption Icon={ ChatOutlined } title="Messaging"/>
 				<HeaderOption Icon={ NotificationsOutlined } title="Notifications"/>
-				<HeaderOption onClick={logoutOfApp} avatar="https://compassionate-leakey-e9b16b.netlify.app/images/IG_Sonny.jpeg" title="Me"/>
+				<HeaderOption avatar={true} onClick={logoutOfApp} title="Me"/>
 			</div>
 		</div>
 	)

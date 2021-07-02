@@ -5,15 +5,19 @@ import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import SubscriptionsOutlinedIcon from '@material-ui/icons/SubscriptionsOutlined';
 import firebase from 'firebase';
 import React, { useEffect, useState } from 'react';
+import FlipMove from 'react-flip-move';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
 import './Feed.css';
 import { db } from './firebase';
 import InputOption from './InputOption';
 import Post from './Post';
 
 function Feed() {
-	
-	const [input, setInput] = useState('')
-	const [posts, setPosts] = useState([])
+	const user = useSelector(selectUser);
+	console.log('user', user)
+	const [input, setInput] = useState('');
+	const [posts, setPosts] = useState([]);
 	
 	useEffect(() => {
 		db.collection("posts").orderBy('timestamp', 'desc').onSnapshot((snapshot) => 
@@ -29,10 +33,10 @@ function Feed() {
 	const sendPost = (e) => {
 		e.preventDefault();
 		db.collection('posts').add({
-			name: 'Jamil Shafayat',
-			description: 'Developer',
+			name: user?.displayName || 'Jamil',
+			description: user.email,
 			message: input,
-			photoUrl: '',
+			photoUrl: user.photoUrl || '',
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 		setInput('')
@@ -55,15 +59,17 @@ function Feed() {
 					<InputOption Icon={ CalendarViewDayOutlinedIcon} title="Write Article" color="#7FC15E" />
 				</div>
 			</div>
-			{posts.map(({ id, data: { name, description, message, photoUrl }})=>(
-				<Post 
-					key={id}
-					name={name}
-					description={description}
-					message={message}
-					photoUrl={photoUrl}
-				/>
-			))}	
+			<FlipMove>
+				{posts.map(({ id, data: { name, description, message, photoUrl }})=>(
+					<Post 
+						key={id}
+						name={name}
+						description={description}
+						message={message}
+						photoUrl={photoUrl}
+					/>
+				))}	
+			</FlipMove>
 		</div>
 	)
 }
